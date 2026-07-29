@@ -1,0 +1,37 @@
+apiVersion: v1
+data:
+  kong.yml: |
+    _format_version: "2.1"
+    _transform: true
+    services:
+    - name: auth-v1
+      url: http://supabase-auth:9999/
+      routes:
+      - name: auth-v1-all
+        strip_path: true
+        paths:
+        - /auth/v1
+    - name: rest-v1
+      url: http://supabase-rest:3000/
+      routes:
+      - name: rest-v1-all
+        strip_path: true
+        paths:
+        - /rest/v1
+    - name: meta
+      url: http://supabase-meta:8080/
+      routes:
+      - name: meta-all
+        strip_path: true
+        paths:
+        - /pg
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"kong.yml":"_format_version: \"2.1\"\n_transform: true\nservices:\n- name: auth-v1\n  url: http://supabase-auth:9999/\n  routes:\n  - name: auth-v1-all\n    strip_path: true\n    paths:\n    - /auth/v1\n- name: rest-v1\n  url: http://supabase-rest:3000/\n  routes:\n  - name: rest-v1-all\n    strip_path: true\n    paths:\n    - /rest/v1\n- name: meta\n  url: http://supabase-meta:8080/\n  routes:\n  - name: meta-all\n    strip_path: true\n    paths:\n    - /pg\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"supabase-kong-config","namespace":"supabase"}}
+  creationTimestamp: "2026-07-28T12:01:53Z"
+  name: supabase-kong-config
+  namespace: supabase
+  resourceVersion: "2211121"
+  uid: d9a95df2-a11f-47ec-ac2d-5c7846a5f55f

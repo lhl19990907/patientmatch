@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"supabase-kong","namespace":"supabase"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"supabase-kong"}},"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"2026-07-28T08:33:44Z"},"labels":{"app":"supabase-kong"}},"spec":{"containers":[{"env":[{"name":"KONG_DATABASE","value":"off"},{"name":"KONG_DECLARATIVE_CONFIG","value":"/kong/kong.yml"},{"name":"KONG_DNS_ORDER","value":"LAST,A,CNAME"},{"name":"KONG_PLUGINS","value":"request-transformer,cors,key-auth,acl,basic-auth"},{"name":"KONG_NGINX_PROXY_PROXY_BUFFER_SIZE","value":"160k"},{"name":"KONG_NGINX_PROXY_PROXY_BUFFERS","value":"64 160k"}],"image":"easzlab.io.local:5000/kong:2.8.1","imagePullPolicy":"IfNotPresent","name":"kong","ports":[{"containerPort":8000,"protocol":"TCP"},{"containerPort":8001,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/kong","name":"kong-config"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"configMap":{"defaultMode":420,"name":"supabase-kong-config"},"name":"kong-config"}]}}}}
+  creationTimestamp: "2026-07-28T12:01:53Z"
+  generation: 1
+  name: supabase-kong
+  namespace: supabase
+  resourceVersion: "2211303"
+  uid: 5e491be5-e82e-4133-bf1e-b521ad05331c
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: supabase-kong
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-07-28T08:33:44Z"
+      labels:
+        app: supabase-kong
+    spec:
+      containers:
+      - env:
+        - name: KONG_DATABASE
+          value: "off"
+        - name: KONG_DECLARATIVE_CONFIG
+          value: /kong/kong.yml
+        - name: KONG_DNS_ORDER
+          value: LAST,A,CNAME
+        - name: KONG_PLUGINS
+          value: request-transformer,cors,key-auth,acl,basic-auth
+        - name: KONG_NGINX_PROXY_PROXY_BUFFER_SIZE
+          value: 160k
+        - name: KONG_NGINX_PROXY_PROXY_BUFFERS
+          value: 64 160k
+        image: easzlab.io.local:5000/kong:2.8.1
+        imagePullPolicy: IfNotPresent
+        name: kong
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        - containerPort: 8001
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /kong
+          name: kong-config
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: supabase-kong-config
+        name: kong-config
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-07-28T12:01:54Z"
+    lastUpdateTime: "2026-07-28T12:01:54Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-07-28T12:01:53Z"
+    lastUpdateTime: "2026-07-28T12:01:54Z"
+    message: ReplicaSet "supabase-kong-5fd8f68ff5" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

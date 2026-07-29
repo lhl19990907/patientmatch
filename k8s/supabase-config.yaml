@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  API_EXTERNAL_URL: http://10.0.12.15:31082
+  POSTGRES_DB: postgres
+  POSTGRES_HOST: supabase-db
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: postgres
+  SITE_URL: http://10.0.12.15:31081
+  STUDIO_URL: http://10.0.12.15:31083
+  SUPABASE_INTERNAL_URL: http://supabase-kong.supabase.svc.cluster.local:8000
+  SUPABASE_PUBLIC_URL: http://10.0.12.15:31082
+  UPSTASH_REDIS_DISABLED: "1"
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"API_EXTERNAL_URL":"http://10.0.12.15:31082","POSTGRES_DB":"postgres","POSTGRES_HOST":"supabase-db","POSTGRES_PORT":"5432","POSTGRES_USER":"postgres","SITE_URL":"http://10.0.12.15:31081","STUDIO_URL":"http://10.0.12.15:31083","SUPABASE_INTERNAL_URL":"http://supabase-kong.supabase.svc.cluster.local:8000","SUPABASE_PUBLIC_URL":"http://10.0.12.15:31082","UPSTASH_REDIS_DISABLED":"1"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"supabase-config","namespace":"supabase"}}
+  creationTimestamp: "2026-07-28T12:01:53Z"
+  name: supabase-config
+  namespace: supabase
+  resourceVersion: "2211118"
+  uid: a5077c0e-7444-41d0-b5c1-34024dedc4c5

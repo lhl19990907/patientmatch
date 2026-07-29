@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"supabase-studio","namespace":"supabase"},"spec":{"externalTrafficPolicy":"Cluster","ports":[{"name":"http","nodePort":31083,"port":3000,"protocol":"TCP","targetPort":3000}],"selector":{"app":"supabase-studio"},"sessionAffinity":"None","type":"NodePort"}}
+  creationTimestamp: "2026-07-28T12:01:53Z"
+  name: supabase-studio
+  namespace: supabase
+  resourceVersion: "2211161"
+  uid: bfa25f6e-1802-4a68-a268-e4fa554ef272
+spec:
+  clusterIP: 10.68.8.136
+  clusterIPs:
+  - 10.68.8.136
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    nodePort: 31083
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: supabase-studio
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

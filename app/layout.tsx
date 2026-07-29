@@ -94,6 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${manrope.variable} ${merriweather.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" />
+        <Script src="/runtime-config.js" strategy="beforeInteractive" />
         <Script
           id="website-schema"
           type="application/ld+json"

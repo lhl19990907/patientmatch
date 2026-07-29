@@ -1,20 +1,30 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
-export const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-export const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  // Avoid throwing during build; pages will be dynamic anyway.
-  if (process.env.NODE_ENV === 'production') {
-    console.warn('Supabase env vars missing at build; page should be dynamic.');
+declare global {
+  interface Window {
+    __PATIENTMATCH_CONFIG__?: {
+      supabaseUrl?: string;
+      supabaseAnonKey?: string;
+    };
   }
+}
+
+function resolveSupabaseBrowserConfig() {
+  const runtimeConfig =
+    typeof window !== "undefined" ? window.__PATIENTMATCH_CONFIG__ : undefined;
+  const supabaseUrl =
+    runtimeConfig?.supabaseUrl || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const supabaseAnonKey =
+    runtimeConfig?.supabaseAnonKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("Supabase env not configured");
+  }
+
+  return { supabaseUrl, supabaseAnonKey };
 }
 
 export function getSupabaseBrowser() {
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Supabase env not configured');
-  }
+  const { supabaseUrl, supabaseAnonKey } = resolveSupabaseBrowserConfig();
   return createClient(supabaseUrl, supabaseAnonKey);
 }
-
-

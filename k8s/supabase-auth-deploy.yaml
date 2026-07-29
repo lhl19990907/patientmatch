@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"supabase-auth","namespace":"supabase"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"supabase-auth"}},"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"2026-07-28T08:50:20Z"},"labels":{"app":"supabase-auth"}},"spec":{"containers":[{"env":[{"name":"GOTRUE_API_HOST","value":"0.0.0.0"},{"name":"GOTRUE_API_PORT","value":"9999"},{"name":"API_EXTERNAL_URL","valueFrom":{"configMapKeyRef":{"key":"API_EXTERNAL_URL","name":"supabase-config"}}},{"name":"GOTRUE_SITE_URL","valueFrom":{"configMapKeyRef":{"key":"SITE_URL","name":"supabase-config"}}},{"name":"GOTRUE_URI_ALLOW_LIST","value":"http://10.0.12.15:31081,http://10.0.12.15:31081/**"},{"name":"GOTRUE_DB_DRIVER","value":"postgres"},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"POSTGRES_PASSWORD","name":"supabase-secrets"}}},{"name":"GOTRUE_JWT_SECRET","valueFrom":{"secretKeyRef":{"key":"JWT_SECRET","name":"supabase-secrets"}}},{"name":"GOTRUE_JWT_EXP","value":"3600"},{"name":"GOTRUE_JWT_DEFAULT_GROUP_NAME","value":"authenticated"},{"name":"GOTRUE_EXTERNAL_EMAIL_ENABLED","value":"true"},{"name":"GOTRUE_MAILER_AUTOCONFIRM","value":"true"},{"name":"GOTRUE_DISABLE_SIGNUP","value":"false"},{"name":"GOTRUE_OPERATOR_TOKEN","valueFrom":{"secretKeyRef":{"key":"SERVICE_ROLE_KEY","name":"supabase-secrets"}}},{"name":"GOTRUE_DB_DATABASE_URL","value":"postgres://supabase_auth_admin:$(POSTGRES_PASSWORD)@supabase-db:5432/postgres"}],"image":"easzlab.io.local:5000/supabase/gotrue:v2.177.0","imagePullPolicy":"IfNotPresent","name":"auth","ports":[{"containerPort":9999,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}}}
+  creationTimestamp: "2026-07-28T12:01:53Z"
+  generation: 2
+  name: supabase-auth
+  namespace: supabase
+  resourceVersion: "2212103"
+  uid: 2c38c3eb-69c0-41f9-b8c2-3fd45dccd6af
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: supabase-auth
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-07-28T12:04:56Z"
+      labels:
+        app: supabase-auth
+    spec:
+      containers:
+      - env:
+        - name: GOTRUE_API_HOST
+          value: 0.0.0.0
+        - name: GOTRUE_API_PORT
+          value: "9999"
+        - name: API_EXTERNAL_URL
+          valueFrom:
+            configMapKeyRef:
+              key: API_EXTERNAL_URL
+              name: supabase-config
+        - name: GOTRUE_SITE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: SITE_URL
+              name: supabase-config
+        - name: GOTRUE_URI_ALLOW_LIST
+          value: http://10.0.12.15:31081,http://10.0.12.15:31081/**
+        - name: GOTRUE_DB_DRIVER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_PASSWORD
+              name: supabase-secrets
+        - name: GOTRUE_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: JWT_SECRET
+              name: supabase-secrets
+        - name: GOTRUE_JWT_EXP
+          value: "3600"
+        - name: GOTRUE_JWT_DEFAULT_GROUP_NAME
+          value: authenticated
+        - name: GOTRUE_EXTERNAL_EMAIL_ENABLED
+          value: "true"
+        - name: GOTRUE_MAILER_AUTOCONFIRM
+          value: "true"
+        - name: GOTRUE_DISABLE_SIGNUP
+          value: "false"
+        - name: GOTRUE_OPERATOR_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: SERVICE_ROLE_KEY
+              name: supabase-secrets
+        - name: GOTRUE_DB_DATABASE_URL
+          value: postgres://supabase_auth_admin:$(POSTGRES_PASSWORD)@supabase-db:5432/postgres
+        image: easzlab.io.local:5000/supabase/gotrue:v2.177.0
+        imagePullPolicy: IfNotPresent
+        name: auth
+        ports:
+        - containerPort: 9999
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-07-28T12:04:58Z"
+    lastUpdateTime: "2026-07-28T12:04:58Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-07-28T12:01:53Z"
+    lastUpdateTime: "2026-07-28T12:04:58Z"
+    message: ReplicaSet "supabase-auth-6d45dc79f" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

@@ -1,12 +1,24 @@
-'use client';
+"use client";
 
 import { createBrowserClient } from "@supabase/ssr";
 import type { Session, SupabaseClient, User } from "@supabase/supabase-js";
 import type { Database } from "./types";
 
+declare global {
+  interface Window {
+    __PATIENTMATCH_CONFIG__?: {
+      supabaseUrl?: string;
+      supabaseAnonKey?: string;
+    };
+  }
+}
+
 function resolveConfig(): { url: string; anonKey: string } {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const runtimeConfig =
+    typeof window !== "undefined" ? window.__PATIENTMATCH_CONFIG__ : undefined;
+  const url = runtimeConfig?.supabaseUrl || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const anonKey =
+    runtimeConfig?.supabaseAnonKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
   if (!url || !anonKey) {
     throw new Error("Supabase environment variables are not configured.");

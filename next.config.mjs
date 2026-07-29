@@ -1,17 +1,18 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const isDev = process.env.NODE_ENV !== "production";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function cspValue() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
   const connectSrc = [
     "'self'",
-    "https://*.supabase.co", // Safe default for Supabase
-    ...(supabaseUrl ? [supabaseUrl] : []), // Add specific URL if defined
-    ...(isDev ? ["ws:", "wss:"] : []), // WebSocket support for HMR in dev only
+    ...(supabaseUrl ? [supabaseUrl] : []),
+    "http:",
+    "https:",
+    ...(isDev ? ["ws:", "wss:"] : []),
   ].join(" ");
 
   const base = [
@@ -32,7 +33,7 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-  { key: "Permissions-Policy", value: "geolocation=(), microphone=(), camera=()" },
+  { key: "Permissions-Policy", value: "geolocation=(), microphone=(), camera()" },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
   { key: "Content-Security-Policy", value: cspValue() },
 ];
@@ -41,8 +42,8 @@ const nextConfig = {
   outputFileTracingRoot: __dirname,
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'images.unsplash.com' },
-      { protocol: 'https', hostname: 'plus.unsplash.com' },
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "plus.unsplash.com" },
     ],
   },
   async headers() {
